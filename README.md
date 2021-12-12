@@ -1,105 +1,132 @@
-# Luke's build of st - the simple (suckless) terminal
+<h1 align="center">st - simple terminal</h1>
 
-The [suckless terminal (st)](https://st.suckless.org/) with some additional
-features that make it literally the best terminal emulator ever:
+<img align="center" src="/.github/preview.png">
 
-## Unique features (using dmenu)
+<p align="center">st is a simple terminal emulator for X which sucks less.</p>
 
-+ **follow urls** by pressing `alt-l`
-+ **copy urls** in the same way with `alt-y`
-+ **copy the output of commands** with `alt-o`
+---
 
-## Bindings for
+### Keybinds
 
-+ scroll with `alt-↑/↓` or `alt-pageup/down` or `shift` while scrolling the
-  mouse (via [scroll](https://github.com/lukesmithxyz/scroll)).
-+ OR **vim-bindings**: scroll up/down in history with `alt-k` and `alt-j`.
-  Faster with `alt-u`/`alt-d`.
-+ **zoom/change font size**: same bindings as above, but holding down shift as
-  well. `alt-home` returns to default
-+ **copy text** with `alt-c`, **paste** is `alt-v` or `shift-insert`
++ **Normal** scroll with mouse and `Alt+Up` and `Alt+Down`;
++ Bigger scroll with `Alt+PageUp` and `Alt+PageDown`;
++ `Ctrl+Shift+V` to paste text;
++ `Ctrl+Shift+C` or `Middle Button of Mouse` copies the selected text;
++ `Shift+Enter` opens a new terminal in the same path;
++ `Shift+Backspace` opens a new floating terminal in the same path, you should change the variable path to the st with floating title.
+	- [Script that I'm using](https://github.com/BeyondMagic/scripts/blob/master/terminal/st_float);
++ `Shift + Middle Button of Mouse` pastes copied text
++ `CTRL+Backspace` returns `F36+F35` sequence, I use this on **nvim** and **zsh**. It's preferable compared to 
+	- `noremap! <F36><F35> <C-w>` nvim
+	- `inoremap <F36><F35> <C-w>` nvim
+	- `bindkey '^[[24;5~^[[23;5~' backward-kill-word` zsh
 
-## Pretty stuff
+---
 
-+ Compatibility with `Xresources` and `pywal` for dynamic colors.
-+ Default [gruvbox](https://github.com/morhetz/gruvbox) colors otherwise.
-+ Transparency/alpha, which is also adjustable from your `Xresources`.
-+ Default font is system "mono" at 14pt, meaning the font will match your
-  system font.
+## Patches (as far as I remember)
 
-## Other st patches
++ [alpha focus highlight](https://st.suckless.org/patches/alpha_focus_highlight/)
++ [scroll](https://st.suckless.org/patches/scrollback/)
++ rows and columns reflow (can resize the terminal and keep content) [custom](https://github.com/BeyondMagic/st/blob/master/patches/columns-rows-reflow-st-unpatched.patch)
++ [bold](https://st.suckless.org/patches/bold-is-not-bright/)
++ [boxdraw](https://st.suckless.org/patches/boxdraw)
++ [ligatures](https://st.suckless.org/patches/ligatures/)
++ [font2](https://st.suckless.org/patches/font2/)
++ [newterm](https://st.suckless.org/patches/newterm/) [custom](https://github.com/BeyondMagic/st/blob/master/patches/newterm_custom_argument.patch)
++ [any geometry](https://st.suckless.org/patches/anygeometry/)
++ [vertcenter](https://st.suckless.org/patches/vertcenter/)
++ [undercurl](https://st.suckless.org/patches/undercurl/)
++ [live-reload-xresources](https://github.com/gnotclub/xst/commit/c0ffcfbaf8af25468103dd92e0c7e83555e08c7a)
++ [blinking-cursor](https://st.suckless.org/patches/blinking_cursor/)
 
-+ Boxdraw
-+ Ligatures
-+ font2
-+ updated to latest version 0.8.4
+---
 
-## Installation for newbs
+## XResources
 
-You should have xlib header files and libharfbuzz build files installed.
+Example file:
 
-```
-git clone https://github.com/LukeSmithxyz/st
-cd st
-sudo make install
-```
-
-Note that [scroll](https://github.com/lukesmithxyz/scroll) is automatically
-pulled and installed when you make this build of st.
-
-Users of Arch-based distros can also install it from the AUR as
-[st-luke-git](https://aur.archlinux.org/packages/st-luke-git/).
-
-Obviously, `make` is required to build. `fontconfig` is required for the
-default build, since it asks `fontconfig` for your system monospace font.  It
-might be obvious, but `libX11` and `libXft` are required as well. Chances are,
-you have all of this installed already.
-
-On OpenBSD, be sure to edit `config.mk` first and remove `-lrt` from the
-`$LIBS` before compiling.
-
-Be sure to have a composite manager (`xcompmgr`, `picom`, etc.) running if you
-want transparency.
-
-## How to configure dynamically with Xresources
-
-For many key variables, this build of `st` will look for X settings set in
-either `~/.Xdefaults` or `~/.Xresources`. You must run `xrdb` on one of these
-files to load the settings.
-
-For example, you can define your desired fonts, transparency or colors:
+`st.font_fallback` is used for font2, multiple ones are divided by `,`.
 
 ```
-*.font:	Liberation Mono:pixelsize=12:antialias=true:autohint=true;
-*.alpha: 0.9
-*.color0: #111
-...
+st.font           : Fira Code:pixelsize=12.25:antialias=true
+st.font_fallback  : Fira Code Nerd Font Mono:style=Regular:pixelsize=13:antialias=true,Material\\-Design\\-Iconic\\-Font:style=Design-Iconic-Font:pixelsize=12,JoyPixels:pixelsize=13
+st.termname       : st-256color
+st.blinktimeout   : 500
+st.bellvolume     : 0
+st.padding        : 17
+st.cursorshape    : 5
+st.cwscale        : 0.875
+st.chscale        : 0.875
+st.opacity        : 0.875
+st.ligatures      : 1
+st.color0         : #000020
+st.color1         : #EC5E66
+st.color2         : #009900
+st.color3         : #FAC863
+st.color4         : #6699CC
+st.color5         : #D75F86
+st.color6         : #357CD5
+st.color7         : #FDFCFD
+st.color8         : #424043
+st.color9         : #ED2E62
+st.color10        : #5CBF53
+st.color11        : #F3D353
+st.color12        : #65D9EF
+st.color13        : #FA74CE
+st.color14        : #519FD1
+st.color15        : #FFFFFF
+st.color255       : #000020
+st.color256       : #111111
+st.color257       : #ffffff
+st.color258       : #0A0C11
+st.foreground     : #FDFCFD
+st.background     : #0a0c11
+st.cursorfg       : #111111
+st.reverse-cursor : #ffffff
 ```
 
-The `alpha` value (for transparency) goes from `0` (transparent) to `1`
-(opaque). There is an example `Xdefaults` file in this respository.
+Apply the changes to Xorg.
 
-### Colors
+```bash
+xrdb ~/.config/xorg/XResources
+```
 
-To be clear about the color settings:
+Apply the changes to St instances.
 
-- This build will use gruvbox colors by default and as a fallback.
-- If there are Xresources colors defined, those will take priority.
-- But if `wal` has run in your session, its colors will take priority.
+```bash
+kill -USR1 $(pidof st)
+```
 
-Note that when you run `wal`, it will negate the transparency of existing windows, but new windows will continue with the previously defined transparency.
+---
 
-## Notes on Emojis and Special Characters
+### Support
 
-If st crashes when viewing emojis, install
-[libxft-bgra](https://aur.archlinux.org/packages/libxft-bgra/) from the AUR.
++ coloured undercurl (apply the st.info for external programs)
+	- sequence is 4:3, 4:0 to reset
++ history (default: 2000 lines)
++ Emojis 
 
-Note that some special characters may appear truncated if too wide. You might
-want to manually set your prefered emoji/special character font to a lower size
-in the `config.h` file to avoid this. By default, JoyPixels is used at a
-smaller size than the usual text.
+---
 
-## Contact
+### Fonts
 
-- Luke Smith <luke@lukesmith.xyz>
-- [https://lukesmith.xyz](https://lukesmith.xyz)
+This was configured with Fira Code and Material Design Iconic 2 fonts.
+
+---
+
+### Installation<
+
+First, install this package in your system: `libxft-bgra`.
+
+Clone somewhere in your system:
+
+```
+$ git clone https://github.com/beyondmagic/st
+$ cd st
+$ make install
+$ st
+```
+
+If you want to, edit `config.mk` to match your local setup (st is installed into the /usr/local namespace by default).
+
+Then run `tic -x -o ~/.terminfo st.info` to have support in multiple terminal programs that use undercurls, ...
