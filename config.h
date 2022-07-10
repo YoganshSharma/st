@@ -4,10 +4,10 @@
  *
  **********************************************************************************/
 
-static char *font    = "Fira Code:pixelsize=12.25:antialias=true";
+static char *font    = "Cascadia Mono:pixelsize=12.25:antialias=true";
 
 static char *font2[] = {
-
+"JoyPixels:pixelsize=15:antialias=true:autohint=true"
 };
 
 /**********************************************************************************
@@ -281,6 +281,10 @@ static MouseShortcut mshortcuts[] = {
 #define MODKEY  Mod1Mask
 #define TERMMOD (ControlMask|ShiftMask)
 
+static char *openurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -o", "externalpipe", NULL };
+static char *copyurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -c", "externalpipe", NULL };
+static char *copyoutput[] = { "/bin/sh", "-c", "st-copyout", "externalpipe", NULL };
+
 /**********************************************************************************
  * Appereance
  **********************************************************************************/
@@ -341,9 +345,9 @@ static Shortcut shortcuts[] = {
 	{ MODKEY|ShiftMask,     XK_J,           kscrolldown,    {.i = +1} },
   { MODKEY|ShiftMask,     XK_U,		 	 	    kscrollup,      {.i = +10} },
 	{ MODKEY|ShiftMask,     XK_D,		 		    kscrolldown,    {.i = +10} },
-	/* { MODKEY,               XK_l,           externalpipe,   {.v = openurlcmd } }, */
-	/* { MODKEY,               XK_y,           externalpipe,   {.v = copyurlcmd } }, */
-	/* { MODKEY,               XK_o,           externalpipe,   {.v = copyoutput } }, */
+	{ MODKEY,               XK_l,           externalpipe,   {.v = openurlcmd } },
+	{ MODKEY,               XK_y,           externalpipe,   {.v = copyurlcmd } },
+	{ MODKEY,               XK_o,           externalpipe,   {.v = copyoutput } },
 	/* { MODKEY,		XK_s,		changealpha,	{.f = -0.05} }, */
 	/* { MODKEY,		XK_a,		changealpha,	{.f = +0.05} }, */
 
